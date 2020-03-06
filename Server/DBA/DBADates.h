@@ -1,0 +1,54 @@
+
+#ifndef __DBA___CALENDAR_DATES__H__INCLUDED__
+#define __DBA___CALENDAR_DATES__H__INCLUDED__
+
+#pragma once
+
+class CDATE_INSAccessor {
+ public:
+  CDATE_INSAccessor() { memset(this, 0, sizeof(*this)); }
+
+  LONG m_RETURN_VALUE;
+
+  LONG m_CALENDAR_ID;
+  LONG m_DATE;
+  LONG m_TRADE_INDICATOR;
+
+  DEFINE_COMMAND_EX(CDATE_INSAccessor,
+                    L"{ ? = CALL dbo.NewCalendarDateEx(?, ?, ?) }");
+
+  BEGIN_PARAM_MAP(CDATE_INSAccessor)
+  SET_PARAM_TYPE(DBPARAMIO_OUTPUT)
+  COLUMN_ENTRY(1, m_RETURN_VALUE)
+  SET_PARAM_TYPE(DBPARAMIO_INPUT)
+  COLUMN_ENTRY(2, m_CALENDAR_ID)
+  SET_PARAM_TYPE(DBPARAMIO_INPUT)
+  COLUMN_ENTRY(3, m_DATE)
+  SET_PARAM_TYPE(DBPARAMIO_INPUT)
+  COLUMN_ENTRY(4, m_TRADE_INDICATOR)
+  END_PARAM_MAP()
+};
+
+class CDATE_DELAccessor {
+ public:
+  CDATE_DELAccessor() { memset(this, 0, sizeof(*this)); }
+
+  LONG m_RETURN_VALUE;
+
+  LONG m_CALENDAR_ID;
+  LONG m_DATE;
+
+  DEFINE_COMMAND_EX(CDATE_DELAccessor,
+                    L"{ ? = CALL dbo.DelCalendarDateEx(?, ?) }");
+
+  BEGIN_PARAM_MAP(CDATE_DELAccessor)
+  SET_PARAM_TYPE(DBPARAMIO_OUTPUT)
+  COLUMN_ENTRY(1, m_RETURN_VALUE)
+  SET_PARAM_TYPE(DBPARAMIO_INPUT)
+  COLUMN_ENTRY(2, m_CALENDAR_ID)
+  SET_PARAM_TYPE(DBPARAMIO_INPUT)
+  COLUMN_ENTRY(3, m_DATE)
+  END_PARAM_MAP()
+};
+
+#endif

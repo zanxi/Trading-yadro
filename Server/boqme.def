@@ -1,0 +1,13 @@
+LIBRARY "BOQME"
+
+EXPORTS
+
+ModuleType
+ModuleInit
+ModuleUnInit
+InitDB
+Execute
+Reset
+GetUnique
+CheckUnique
+

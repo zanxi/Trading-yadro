@@ -1,0 +1,54 @@
+
+#ifndef __DBA___ACCOUNTS__H__INCLUDED__
+#define __DBA___ACCOUNTS__H__INCLUDED__
+
+#pragma once
+
+class CACCCOUNT_INSAccessor {
+ public:
+  CACCCOUNT_INSAccessor() { memset(this, 0, sizeof(*this)); }
+
+  LONG m_RETURN_VALUE;
+
+  TCHAR m_ACCOUNT_NAME[13];
+  LONG m_FIRM_ID;
+  LONG m_ENABLED;
+  LONG m_ACC_ID;
+
+  DEFINE_COMMAND_EX(CACCCOUNT_INSAccessor,
+                    L"{ ? = CALL dbo.GQA_NewTradeAccount(?, ?, ?, ?) }");
+
+  BEGIN_PARAM_MAP(CACCCOUNT_INSAccessor)
+  SET_PARAM_TYPE(DBPARAMIO_OUTPUT)
+  COLUMN_ENTRY(1, m_RETURN_VALUE)
+  SET_PARAM_TYPE(DBPARAMIO_INPUT)
+  COLUMN_ENTRY(2, m_FIRM_ID)
+  SET_PARAM_TYPE(DBPARAMIO_INPUT)
+  COLUMN_ENTRY(3, m_ACCOUNT_NAME)
+  SET_PARAM_TYPE(DBPARAMIO_INPUT)
+  COLUMN_ENTRY(4, m_ENABLED)
+  SET_PARAM_TYPE(DBPARAMIO_INPUT)
+  COLUMN_ENTRY(5, m_ACC_ID)
+  END_PARAM_MAP()
+};
+
+class CACCOUNT_DELAccessor {
+ public:
+  CACCOUNT_DELAccessor() { memset(this, 0, sizeof(*this)); }
+
+  LONG m_RETURN_VALUE;
+
+  LONG m_ACCOUNT_ID;
+
+  DEFINE_COMMAND_EX(CACCOUNT_DELAccessor,
+                    L"{ ? = CALL dbo.GQA_DelAccount(?) }");
+
+  BEGIN_PARAM_MAP(CACCOUNT_DELAccessor)
+  SET_PARAM_TYPE(DBPARAMIO_OUTPUT)
+  COLUMN_ENTRY(1, m_RETURN_VALUE)
+  SET_PARAM_TYPE(DBPARAMIO_INPUT)
+  COLUMN_ENTRY(2, m_ACCOUNT_ID)
+  END_PARAM_MAP()
+};
+
+#endif

@@ -1,0 +1,62 @@
+
+#ifndef __DBA___SCHEDULE__H__INCLUDED__
+#define __DBA___SCHEDULE__H__INCLUDED__
+
+#pragma once
+
+class CSCHEDULE_INSAccessor {
+ public:
+  CSCHEDULE_INSAccessor() { memset(this, 0, sizeof(*this)); }
+
+  LONG m_RETURN_VALUE;
+
+  LONG m_SEC_ID;
+  DBSTATUS m_SEC_ID_DBS;
+  TCHAR m_EVENT_CODE[10];
+  TCHAR m_EVENT_TIME[20];
+  LONG m_CLASS_ID;
+  LONG m_CANCEL_ORDERS;
+
+  DEFINE_COMMAND_EX(CSCHEDULE_INSAccessor,
+                    L"{ ? = CALL dbo.GQA_NewSchedule(?, ?, ?, ?, ?) }");
+
+  BEGIN_PARAM_MAP(CSCHEDULE_INSAccessor)
+
+  SET_PARAM_TYPE(DBPARAMIO_OUTPUT)
+  COLUMN_ENTRY(1, m_RETURN_VALUE)
+
+  SET_PARAM_TYPE(DBPARAMIO_INPUT)
+  COLUMN_ENTRY(2, m_CLASS_ID)
+  COLUMN_ENTRY_STATUS(3, m_SEC_ID, m_SEC_ID_DBS)
+  COLUMN_ENTRY(4, m_EVENT_CODE)
+  COLUMN_ENTRY(5, m_EVENT_TIME)
+  COLUMN_ENTRY(6, m_CANCEL_ORDERS)
+
+  END_PARAM_MAP()
+};
+
+class CSCHEDULE_DELAccessor {
+ public:
+  CSCHEDULE_DELAccessor() { memset(this, 0, sizeof(*this)); }
+
+  LONG m_RETURN_VALUE;
+
+  LONG m_CLASS_ID;
+  TCHAR m_EVENT_TIME[19];
+
+  DEFINE_COMMAND_EX(CSCHEDULE_DELAccessor,
+                    L"{ ? = CALL dbo.GQA_DelSchedule(?, ?) }");
+
+  BEGIN_PARAM_MAP(CSCHEDULE_DELAccessor)
+
+  SET_PARAM_TYPE(DBPARAMIO_OUTPUT)
+  COLUMN_ENTRY(1, m_RETURN_VALUE)
+
+  SET_PARAM_TYPE(DBPARAMIO_INPUT)
+  COLUMN_ENTRY(2, m_CLASS_ID)
+  COLUMN_ENTRY(3, m_EVENT_TIME)
+
+  END_PARAM_MAP()
+};
+
+#endif

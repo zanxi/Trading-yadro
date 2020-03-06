@@ -1,0 +1,54 @@
+
+#ifndef __DBA___TAGS__H__INCLUDED__
+#define __DBA___TAGS__H__INCLUDED__
+
+#pragma once
+
+class CTAG_INSAccessor
+{
+public:
+	CTAG_INSAccessor()
+	{
+		memset(this, 0, sizeof(*this));
+	}
+
+	LONG m_RETURN_VALUE;
+
+	TCHAR m_TAG_NAME[5];
+	TCHAR m_TAG_CLASSES[900];
+
+	DEFINE_COMMAND_EX(CTAG_INSAccessor, L"{ ? = CALL dbo.GQA_NewTag(?, ?) }");
+
+	BEGIN_PARAM_MAP(CTAG_INSAccessor)
+		SET_PARAM_TYPE(DBPARAMIO_OUTPUT)
+		COLUMN_ENTRY(1, m_RETURN_VALUE)
+		SET_PARAM_TYPE(DBPARAMIO_INPUT)
+		COLUMN_ENTRY(2, m_TAG_NAME)
+		SET_PARAM_TYPE(DBPARAMIO_INPUT)
+		COLUMN_ENTRY(3, m_TAG_CLASSES)
+	END_PARAM_MAP()
+};
+
+class CTAG_DELAccessor
+{
+public:
+	CTAG_DELAccessor()
+	{
+		memset(this, 0, sizeof(*this));
+	}
+
+	LONG m_RETURN_VALUE;
+
+	LONG m_TAG_ID;
+
+	DEFINE_COMMAND_EX(CTAG_DELAccessor, L"{ ? = CALL dbo.GQA_DelTag(?) }");
+
+	BEGIN_PARAM_MAP(CTAG_DELAccessor)
+		SET_PARAM_TYPE(DBPARAMIO_OUTPUT)
+		COLUMN_ENTRY(1, m_RETURN_VALUE)
+		SET_PARAM_TYPE(DBPARAMIO_INPUT)
+		COLUMN_ENTRY(2, m_TAG_ID)
+	END_PARAM_MAP()
+};
+
+#endif
